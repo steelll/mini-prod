@@ -10,8 +10,16 @@
     <div class="container">
         <div th:replace="fragments/bodyHeader :: bodyHeader" />
         <div class="jumbotron">
-            <h1>HELLO SHOP</h1>
-            <p class="lead">회원 기능</p>
+            <ul style="list-style: none;">
+                <li><p th:text="#{label.customer.management}">고객관리</p></li>
+                <li>
+                    <ul style="list-style: none;">
+                        <li><p th:text="#{label.customer.regist}" href="/members/new">고객등록</p></li>
+                        <li><p th:text="#{label.customer.search}" href="/members">고객조회</p></li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- <p class="lead">회원 기능</p>
             <p>
                 <a class="btn btn-lg btn-secondary" href="/members/new">회원 가입</a>
                 <a class="btn btn-lg btn-secondary" href="/members">회원 목록</a>
@@ -25,7 +33,7 @@
             <p>
                 <a class="btn btn-lg btn-info" href="/order">상품 주문</a>
                 <a class="btn btn-lg btn-info" href="/orders">주문 내역</a>
-            </p>
+            </p> -->
         </div>
         <div th:replace="fragments/footer :: footer" />
     </div> <!-- /container -->

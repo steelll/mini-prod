@@ -14,4 +14,12 @@ public class Customer {
     @Id @GeneratedValue
     @Column(name = "id")
     private Long id;
+
+    private String name;
+
+    @Embedded
+    private Address address;
+
+    private int linecount;
+   
 }
