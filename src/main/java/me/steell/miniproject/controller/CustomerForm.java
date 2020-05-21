@@ -1,23 +1,18 @@
-package me.steell.miniproject.domain;
+package me.steell.miniproject.controller;
 
-import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
 @Getter @Setter
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class Customer {
-    
-    @Id @GeneratedValue
-    @Column(name = "id")
-    private Long id;
-
+public class CustomerForm {
+    @NotEmpty(message = "필수입니다.")
     private String name;
 
-    @Embedded
-    private Address address;
+    private String city;
+    private String street;
+    private String zipcode;
 
     private int linecount;
     private String customertype;
@@ -28,5 +23,4 @@ public class Customer {
     private String bizregnumber;
     private String representative;
     private String phoneno;
-   
 }

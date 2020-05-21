@@ -26,9 +26,16 @@ public class CustomerService {
 
     private void validateDuplicateCustomer(final Customer customer) {
         // exception
-        final List<Customer> findCustomers = customerRepository.findByRegnumber(customer.getName());
-        if (!findCustomers.isEmpty()) {
-            throw new IllegalStateException("이미 존재하는 회원입니다.");
+        final List<Customer> findPerson = customerRepository.findByRegnumber(customer.getRegnumber());
+        if (!findPerson.isEmpty()) {
+            throw new IllegalStateException("이미 등록되어 있습니다.");
+            
+        }
+
+        final List<Customer> findCompany = customerRepository.findByBizregnumber(customer.getBizregnumber());
+        if (!findCompany.isEmpty()) {
+            throw new IllegalStateException("이미 등록되어 있습니다.");
+            
         }
     }
 

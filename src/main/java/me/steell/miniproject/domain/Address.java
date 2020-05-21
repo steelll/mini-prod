@@ -3,9 +3,10 @@ package me.steell.miniproject.domain;
 import javax.persistence.Embeddable;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Embeddable
-@Getter
+@Getter @Setter
 public class Address {
 
     private String city;

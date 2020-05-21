@@ -38,10 +38,22 @@ public class CustomerRepository {
             .setParameter("name", string)
             .getResultList();
     }
+
+    public List<Customer> findByType(String string){
+        return em.createQuery("select m from customer m where m.customertype = :customertype", Customer.class)
+            .setParameter("customertype", string)
+            .getResultList();
+    }
     
     public List<Customer> findByRegnumber(String string){
         return em.createQuery("select m from customer m where m.regnumber = :regnumber", Customer.class)
             .setParameter("regnumber", string)
+            .getResultList();
+    }
+
+    public List<Customer> findByBizregnumber(String string){
+        return em.createQuery("select m from customer m where m.bizregnumber = :bizregnumber", Customer.class)
+            .setParameter("bizregnumber", string)
             .getResultList();
     }
 }
