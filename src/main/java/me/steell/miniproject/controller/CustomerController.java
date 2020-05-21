@@ -19,13 +19,13 @@ public class CustomerController {
     
     private final CustomerService customerService;
 
-    @GetMapping("/customer/new")
+    @GetMapping("/customers/new")
     public String createForm(Model model){
         model.addAttribute("customerForm", new CustomerForm());
         return "customers/createCustomerForm";
     }
 
-    @PostMapping("/customer/new")
+    @PostMapping("/customers/new")
     public String create(@Valid CustomerForm form, BindingResult result){
 
         if (result.hasErrors()){
