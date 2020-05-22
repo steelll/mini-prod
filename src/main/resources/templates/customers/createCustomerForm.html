@@ -1,16 +1,21 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main}"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
+
 <style>
-    .fieldError {
-        border-color: #bd2130;
-    }
-</style>
+        .fieldError {
+            border-color: #bd2130;
+        }
+    </style>
+
+    <title>Mini Project</title>
+
 </head>
 
 <body>
-    <div class="container">
+    <div layout:fragment="content" class="container">
         
         <form role="form" action="/customers/new" th:object="${customerForm}" method="post">
             <div class="form-group">
@@ -19,18 +24,20 @@
                                 th:class="${#fields.hasErrors('name')}? 'form-controlfieldError' : 'form-control'">
                 <p th:if="${#fields.hasErrors('name')}"th:errors="*{name}">Incorrect date</p>
             </div>
-            <!-- <div class="form-group">
-                <label th:for="customerType">고객 구분: </label>
-                <div class="input-group" th:field="*{customerType}" id="selection"
-                    placeholder="고객 구분을 선택하세요">
-                    <input type="radio" name="customerType" value="PERSON" checked="checked"> 개인고객</input>
-                    <input type="radio" name="customerType" value="COMPANY"> 법인고객</input>
+            
+            <div class="form-group">
+                <label th:for="customertype">고객 구분: </label>
+                <div class="input-group" th:field="*{customertype}" id="selection" placeholder="고객 구분을 선택하세요">
+                    <input type="radio" name="customertype" value="PERSON" checked="checked"> 개인고객</input>
+                    <input type="radio" name="customertype" value="COMPANY"> 법인고객</input>
                 </div>
             </div>
+             
             <div class="form-group">
                 <label th:for="city">City : </label>
                 <input type="text" th:field="*{city}" class="form-control"placeholder="도시를 입력하세요">
             </div>
+            
             <div class="form-group">
                 <label th:for="street">Street : </label>
                 <input type="text" th:field="*{street}" class="form-control"placeholder="거리를 입력하세요">
@@ -44,7 +51,7 @@
                 <input type="text" th:field="*{linecount}" class="form-control" placeholder="회선수량을 입력하세요">
             </div>
 
-            <div id="personArea" th:style="*{customerType} == 'COMPANY' ? 'display:none;'">
+            <div class="form-group" id="personArea" th:style="*{customertype} == 'COMPANY' ? 'display:none;'">
                 <div class="form-group">
                     <label th:for="regnumber">주민등록번호</label>
                     <input type="text" th:class="${#fields.hasErrors('regnumber')} ? 'form-control fieldError' : 'form-control'"  th:field="*{regnumber}">
@@ -52,24 +59,53 @@
                 </div>
                 <div class="form-group">
                     <label th:for="mobilenumber">휴대폰번호</label>
-                    <input type="text" class="form-control"  th:field="*{handmobilenumberPhone}">
+                    <input type="text" class="form-control"  th:field="*{mobilenumber}">
                 </div>
             </div>
 
-            <div id="companyArea" th:styleappend="*{customerType} == 'PERSON' ? 'display:none;'">
+            <div class="form-group" id="companyArea" th:style="*{customertype} == 'COMPANY' ? 'display:none;'">
                 <div class="form-group">
-                  <label th:for="bizregnumber">사업자등록번호</label>
-                  <input type="text" class="form-control"  th:field="*{bizregnumber}">
+                    <label th:for="bizregnumber">사업자등록번호</label>
+                    <input type="text" th:class="${#fields.hasErrors('bizregnumber')} ? 'form-control fieldError' : 'form-control'"  th:field="*{bizregnumber}">
+                          <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('bizregnumber')}" th:errors="*{bizregnumber}">Incorrect Data</div>
                 </div>
                 <div class="form-group">
-                  <label th:for="representative">대표자명</label>
-                  <input type="text" class="form-control"  th:field="*{representative}">
+                    <label th:for="representative">대표자명</label>
+                    <input type="text" class="form-control"  th:field="*{representative}">
                 </div>
                 <div class="form-group">
-                  <label th:for="phoneno">회사전화번호</label>
-                  <input type="text" class="form-control"  th:field="*{phoneno}">
+                    <label th:for="phoneno">회사전화번호</label>
+                    <input type="text" class="form-control"  th:field="*{phoneno}">
                 </div>
-            </div> -->
+            </div>
+            <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+            <script>
+            $(document).ready(function() {
+
+                if ( $('input[name=customertype]').val() == 'COMPANY') {
+                    
+                    $('#personArea').hide();
+                    $('#companyArea').show();
+
+                } else {
+
+                    $('#personArea').show();
+                    $('#companyArea').hide();
+
+                }
+                $('input[name=customertype]').on('change', function(e){
+                    if (e.target.value == 'COMPANY'){
+                        $('#personArea').hide();
+                        $('#companyArea').show();
+                    } else {
+                        $('#personArea').show();
+                        $('#companyArea').hide();
+
+                    }
+                });
+
+            });
+            </script>      -->
 
             <button type="submit" class="btn btn-primary">저장</button>
         </form>

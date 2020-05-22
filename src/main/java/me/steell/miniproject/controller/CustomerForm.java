@@ -7,16 +7,20 @@ import lombok.Setter;
 
 @Getter @Setter
 public class CustomerForm {
+
+    private Long id;
+
     @NotEmpty(message = "필수입니다.")
     private String name;
 
+    private String customertype;
+    
     private String city;
     private String street;
     private String zipcode;
 
     private int linecount;
-    private String customertype;
-
+    
     private String regnumber;
     private String mobilenumber;
 

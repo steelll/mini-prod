@@ -1,11 +1,15 @@
 package me.steell.miniproject.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import lombok.RequiredArgsConstructor;
@@ -48,7 +52,66 @@ public class CustomerController {
         customer.setPhoneno(form.getPhoneno());
         
         customerService.join(customer);
-        return "redirect:/";
+        return "redirect:/customers";
+
+    }
+
+    @GetMapping("/customers")
+    public String list(Model model){
+        List<Customer> customers = customerService.findCustomers();
+        model.addAttribute("customers", customers);
+        return "customers/customerList";
+    }
+
+    @GetMapping("/customers/{id}/edit")
+    public String updatCustomerForm(@PathVariable("id") Long id, Model model){
+        
+        Customer customer = (Customer) customerService.findOne(id);
+        
+        CustomerForm form = new CustomerForm();
+
+        form.setId(customer.getId());
+        form.setName(customer.getName());
+        
+        form.setCity(customer.getAddress().getCity());
+        form.setStreet(customer.getAddress().getStreet());
+        form.setZipcode(customer.getAddress().getZipcode());
+        form.setLinecount(customer.getLinecount());
+        form.setCustomertype(customer.getCustomertype());
+
+        form.setRegnumber(customer.getRegnumber());
+        form.setMobilenumber(customer.getMobilenumber());
+
+        form.setBizregnumber(customer.getBizregnumber());
+        form.setRepresentative(customer.getRepresentative());
+        form.setPhoneno(customer.getPhoneno());
+
+        model.addAttribute("form", form);
+        return "customers/updateCustomerForm";
+    }
+
+    @PostMapping("/customers/{id}/edit")
+    public String updateCustomer(@ModelAttribute("form") CustomerForm form){
+        
+        Address address = new Address(form.getCity(), form.getStreet(), form.getZipcode());
+        
+        Customer customer = new Customer();
+        customer.setId(form.getId());
+        customer.setName(form.getName());
+        customer.setAddress(address);
+        customer.setLinecount(form.getLinecount());
+        customer.setCustomertype(form.getCustomertype());
+
+        customer.setRegnumber(form.getRegnumber());
+        customer.setMobilenumber(form.getMobilenumber());
+
+        customer.setBizregnumber(form.getBizregnumber());
+        customer.setRepresentative(form.getRepresentative());
+        customer.setPhoneno(form.getPhoneno());
+        
+        customerService.join(customer);
+        
+        return "redirect:/customers";
 
     }
 }
