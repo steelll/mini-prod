@@ -1,6 +1,6 @@
 spring:
     datasource:
-        url: jdbc:h2:tcp://localhost/~/miniproject
+        url: jdbc:h2:tcp://localhost/~/test
         username: sa
         password:
         driver-class-name: org.h2.Driver
@@ -14,6 +14,15 @@ spring:
     thymeleaf:
         prefix: classpath:/templates/
         suffix: .html
-logging.level:
-    org.hibernate.SQL: debug
-# org.hibernate.type: trace
+
+logging:
+    level:
+        root: debug
+        org.hibernate.SQL: debug
+        # org.hibernate.type: trace
+        com.parfait.study.simplelogging.service.SomeService: info
+        me.steell.miniproject: debug
+
+#logBack dev, prod 설정
+#spring.profiles.include: dev
+spring.profiles.include: prod
