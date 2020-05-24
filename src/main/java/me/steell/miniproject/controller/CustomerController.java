@@ -94,14 +94,14 @@ public class CustomerController {
         HashMap result = new HashMap<>();
         result.put("count", 1);
         result.put("status", "SUCCESS");
-        result.put("message", "");
+        result.put("templates/message", "");
         try {
             model.addAttribute("form", form);
         } catch (Exception e) {
             //TODO: handle exception
             result.put("count", 0);
             result.put("status", "FAIL");
-            result.put("message", e.getMessage());
+            result.put("templates/message", e.getMessage());
         }
         return result;
         //result.put("count", 1);

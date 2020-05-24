@@ -1,8 +1,11 @@
 package me.steell.miniproject.config;
 
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.core.env.Environment;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
@@ -15,7 +18,19 @@ public class WebConfig {
     @Bean
     public LocaleResolver localeResolver() {
         SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
-        sessionLocaleResolver.setDefaultLocale(Locale.KOREA);
+
+
+        ApplicationContext ctx = new GenericApplicationContext();
+        Environment env = ctx.getEnvironment();
+        String dLang = env.getProperty("-Dlang");
+        if("kr".equals( dLang)) {
+            sessionLocaleResolver.setDefaultLocale(Locale.KOREA);
+        }else if("en".equals( dLang)) {
+            sessionLocaleResolver.setDefaultLocale(Locale.US);
+        }else{
+            sessionLocaleResolver.setDefaultLocale(Locale.US);
+        }
+
         return sessionLocaleResolver;
     }
 
