@@ -1,18 +1,16 @@
 package me.steell.miniproject.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
 import me.steell.miniproject.domain.Address;
@@ -32,12 +30,8 @@ public class CustomerController {
     }
 
     @PostMapping("/customers/new")
-    public String create(@Valid CustomerForm form, BindingResult result){
+    public String create(@Valid CustomerForm form, BindingResult result, final HttpServletRequest req){
 
-        if (result.hasErrors()){
-            return "customers/createCustomerForm";
-        }
-        
         Address address = new Address(form.getCity(), form.getStreet(), form.getZipcode());
         
         Customer customer = new Customer();
@@ -52,7 +46,14 @@ public class CustomerController {
         customer.setBizregnumber(form.getBizregnumber());
         customer.setRepresentative(form.getRepresentative());
         customer.setPhoneno(form.getPhoneno());
-        
+
+        new CustomerFormValidation().validate( form, result );
+
+        if( result.hasErrors() ){
+           //return "redirect:/customers/new";
+            return "redirect:/customers/new";
+        }
+
         customerService.join(customer);
         return "redirect:/customers";
 
@@ -65,10 +66,16 @@ public class CustomerController {
         return "customers/customerList";
     }
 
+    @GetMapping("/customers/{id}")
+    public String CustomerForm(@PathVariable("id") Long id, Model model){
+        model.addAttribute("id", id);
+        return "customers/updateCustomerForm";
+    }
+
     @ResponseBody
     @GetMapping("/customers/{id}/edit")
     public HashMap updatCustomerForm(@PathVariable("id") Long id, Model model){
-        
+
         Customer customer = (Customer) customerService.findOne(id);
         
         CustomerForm form = new CustomerForm();
@@ -89,30 +96,32 @@ public class CustomerController {
         form.setRepresentative(customer.getRepresentative());
         form.setPhoneno(customer.getPhoneno());
 
-        
+        ArrayList list = new ArrayList<HashMap>();
+        HashMap data = new HashMap();
+        HashMap address = new HashMap();
+        address.put("city", customer.getAddress().getCity());
+        address.put("street", customer.getAddress().getStreet());
+        address.put("zipcode", customer.getAddress().getZipcode());
+
+
+        data.put("id", customer.getId());
+        data.put("name", customer.getName());
+        data.put("address", address);
+        data.put("linecount", customer.getLinecount());
+        data.put("mobilenumber", customer.getMobilenumber());
+
+        list.add( data );
 
         HashMap result = new HashMap<>();
-        result.put("count", 1);
-        result.put("status", "SUCCESS");
-        result.put("templates/message", "");
-        try {
-            model.addAttribute("form", form);
-        } catch (Exception e) {
-            //TODO: handle exception
-            result.put("count", 0);
-            result.put("status", "FAIL");
-            result.put("templates/message", e.getMessage());
-        }
+        result.put("count", customer != null ? 1 : 0 );
+        result.put("data", list);
         return result;
-        //result.put("count", 1);
-
-
-        //return "customers/updateCustomerForm";
     }
 
+    @ResponseBody
     @PostMapping("/customers/{id}/edit")
-    public String updateCustomer(@ModelAttribute("form") CustomerForm form){
-        
+    public HashMap updateCustomer(@RequestBody CustomerForm form){
+
         Address address = new Address(form.getCity(), form.getStreet(), form.getZipcode());
         
         Customer customer = new Customer();
@@ -129,9 +138,18 @@ public class CustomerController {
         customer.setRepresentative(form.getRepresentative());
         customer.setPhoneno(form.getPhoneno());
         
-        customerService.join(customer);
-        
-        return "redirect:/customers";
+        HashMap result = new HashMap<>();
+        result.put("count", 1);
+        result.put("status", "SUCCESS");
+        result.put("message", "");
+        try {
+            customerService.join(customer);
+        } catch (Exception e) {
+            result.put("count", 0);
+            result.put("status", "FAIL");
+            result.put("message", e.getMessage());
+        }
+        return result;
 
     }
 }

@@ -38,7 +38,7 @@
                         <td th:text="${customer.address?.city} + ' ' + ${customer.address?.street} + ' ' + ${customer.address?.zipcode}"></td>
                         <td th:text="${customer.linecount}"></td>
                         <td>
-                            <a href="#" th:href="@{/customers/{id}/edit (id=${customer.id})}" class="btn btn-primary"
+                            <a href="#" th:href="@{/customers/{id} (id=${customer.id})}" class="btn btn-primary"
                                 role="button">수정</a>
                         </td>
                     </tr>

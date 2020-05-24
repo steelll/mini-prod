@@ -9,8 +9,6 @@ import lombok.Setter;
 public class CustomerForm {
 
     private Long id;
-
-    @NotEmpty(message = "필수입니다.")
     private String name;
 
     private String customertype;
