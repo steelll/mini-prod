@@ -33,6 +33,13 @@ public class CustomerRepository {
         return em.createQuery("select m from Customer m", Customer.class)
                  .getResultList();
     }
+    
+    // public Customer deleteOne(Long id){
+    //     return em.(Customer.class, id);
+    //     // return em.createQuery("delete from customer m where m.id = :id", Customer.class)
+    //     //     .setParameter("id", id)
+    //     //     .getResultList();
+    // }
 
     // public List<Customer> findByName(String name){
     //     return em.createQuery("select m from customer m where m.name = :name", Customer.class)

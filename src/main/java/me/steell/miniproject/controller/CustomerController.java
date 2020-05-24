@@ -1,5 +1,6 @@
 package me.steell.miniproject.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 import me.steell.miniproject.domain.Address;
@@ -63,8 +65,9 @@ public class CustomerController {
         return "customers/customerList";
     }
 
+    @ResponseBody
     @GetMapping("/customers/{id}/edit")
-    public String updatCustomerForm(@PathVariable("id") Long id, Model model){
+    public HashMap updatCustomerForm(@PathVariable("id") Long id, Model model){
         
         Customer customer = (Customer) customerService.findOne(id);
         
@@ -86,8 +89,25 @@ public class CustomerController {
         form.setRepresentative(customer.getRepresentative());
         form.setPhoneno(customer.getPhoneno());
 
-        model.addAttribute("form", form);
-        return "customers/updateCustomerForm";
+        
+
+        HashMap result = new HashMap<>();
+        result.put("count", 1);
+        result.put("status", "SUCCESS");
+        result.put("message", "");
+        try {
+            model.addAttribute("form", form);
+        } catch (Exception e) {
+            //TODO: handle exception
+            result.put("count", 0);
+            result.put("status", "FAIL");
+            result.put("message", e.getMessage());
+        }
+        return result;
+        //result.put("count", 1);
+
+
+        //return "customers/updateCustomerForm";
     }
 
     @PostMapping("/customers/{id}/edit")
