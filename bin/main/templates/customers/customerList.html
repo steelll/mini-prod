@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<style>
+        .fieldError {
+            border-color: #bd2130;
+        }
+    </style>
+
+    <title>Mini Project</title>
+
+</head>
+
+<body>
+    <div class="container">
+        <div>
+            
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th style="visibility:hidden">#</th>
+                        <th>고객명</th>
+                        <th>고객구분</th>
+                        <th>주소</th>
+                        <th>회선수량</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="customer : ${customers}">
+                        <td th:text="${customer.id}" style="visibility:hidden"></td>
+                        <td th:text="${customer.name}"></td>
+                        <td th:text="${customer.customertype}"></td>
+                        <td th:text="${customer.address?.city} + ' ' + ${customer.address?.street} + ' ' + ${customer.address?.zipcode}"></td>
+                        <td th:text="${customer.linecount}"></td>
+                        <td>
+                            <a href="#" th:href="@{/customers/{id} (id=${customer.id})}" class="btn btn-primary"
+                                role="button">수정</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+    </div> <!-- /container -->
+</body>
+
+</html>

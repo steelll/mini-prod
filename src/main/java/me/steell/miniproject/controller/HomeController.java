@@ -13,7 +13,7 @@ public class HomeController {
     public String home(){
         log.info("home controller");
 
-        String err = null;
+        // String err = null;
         return "home";
     }
     

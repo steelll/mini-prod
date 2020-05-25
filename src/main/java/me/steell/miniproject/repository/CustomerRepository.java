@@ -41,11 +41,11 @@ public class CustomerRepository {
     //     //     .getResultList();
     // }
 
-    // public List<Customer> findByName(String name){
-    //     return em.createQuery("select m from customer m where m.name = :name", Customer.class)
-    //         .setParameter("name", name)
-    //         .getResultList();
-    // }
+    public List<Customer> findByName(String name){
+        return em.createQuery("select m from customer m where m.name = :name", Customer.class)
+            .setParameter("name", name)
+            .getResultList();
+    }
 
     // public List<Customer> findByType(String string){
     //     return em.createQuery("select m from customer m where m.customertype = :customertype", Customer.class)
@@ -53,15 +53,15 @@ public class CustomerRepository {
     //         .getResultList();
     // }
     
-    // public List<Customer> findByRegnumber(String string){
-    //     return em.createQuery("select m from customer m where m.regnumber = :regnumber", Customer.class)
-    //         .setParameter("regnumber", string)
-    //         .getResultList();
-    // }
+    public List<Customer> findByRegnumber(String string){
+        return em.createQuery("select m from customer m where m.regnumber = :regnumber", Customer.class)
+            .setParameter("regnumber", string)
+            .getResultList();
+    }
 
-    // public List<Customer> findByBizregnumber(String string){
-    //     return em.createQuery("select m from customer m where m.bizregnumber = :bizregnumber", Customer.class)
-    //         .setParameter("bizregnumber", string)
-    //         .getResultList();
-    // }
+    public List<Customer> findByBizregnumber(String string){
+        return em.createQuery("select m from customer m where m.bizregnumber = :bizregnumber", Customer.class)
+            .setParameter("bizregnumber", string)
+            .getResultList();
+    }
 }
