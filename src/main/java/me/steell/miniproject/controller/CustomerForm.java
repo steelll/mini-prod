@@ -1,6 +1,6 @@
 package me.steell.miniproject.controller;
 
-// import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotEmpty;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +9,8 @@ import lombok.Setter;
 public class CustomerForm {
 
     private Long id;
+
+    @NotEmpty(message = "이름은 필수 입니다")
     private String name;
 
     private String customertype;

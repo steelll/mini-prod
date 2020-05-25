@@ -37,20 +37,20 @@ public class CustomerService {
         return customerRepository.findByName(name);
     }
 
-//    private void validateDuplicateCustomer(final Customer customer) {
-//
-//        final List<Customer> findPersons = customerRepository.findByRegnumber(customer.getRegnumber());
-//        if (!findPersons.isEmpty()) {
-//            throw new IllegalStateException("이미 등록되어 있습니다.");
-//
-//        }
-//
-//        final List<Customer> findCompanys = customerRepository.findByBizregnumber(customer.getBizregnumber());
-//        if (!findCompanys.isEmpty()) {
-//            throw new IllegalStateException("이미 등록되어 있습니다.");
-//
-//        }
-//
-//    }
+   private void validateDuplicateCustomer(final Customer customer) {
+
+       final List<Customer> findPersons = customerRepository.findByRegnumber(customer.getRegnumber());
+       if (!findPersons.isEmpty()) {
+           throw new IllegalStateException("이미 등록되어 있습니다.");
+
+       }
+
+       final List<Customer> findCompanys = customerRepository.findByBizregnumber(customer.getBizregnumber());
+       if (!findCompanys.isEmpty()) {
+           throw new IllegalStateException("이미 등록되어 있습니다.");
+
+       }
+
+   }
 
 }
