@@ -4,7 +4,8 @@
 
 <head>
 
-
+    <meta charset="UTF-8">
+    <title>Mini Project</title>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -32,7 +33,11 @@
                     $( frm.street ).val(res.data[0].address.street);
                     $( frm.zipcode ).val(res.data[0].address.zipcode);
                     $( frm.linecount ).val(res.data[0].linecount);
+                    $( frm.regnumber ).val(res.data[0].regnumber);
                     $( frm.mobilenumber ).val(res.data[0].mobilenumber);
+                    $( frm.bizregnumber ).val(res.data[0].bizregnumber);
+                    $( frm.representative ).val(res.data[0].representative);
+                    $( frm.phoneno ).val(res.data[0].phoneno);
                 }
             });
         }
@@ -48,7 +53,7 @@
                 , city : $( frm.city ).val()
                 , street : $( frm.street ).val()
                 , zipcode : $( frm.zipcode ).val()
-                , ecount : $( frm.ecount ).val()
+                , linecount : $( frm.linecount ).val()
                 , regnumber : $( frm.regnumber ).val()
                 , mobilenumber : $( frm.mobilenumber ).val()
                 , bizregnumber : $( frm.bizregnumber ).val()
@@ -64,7 +69,7 @@
                 dataType: "json",
                 success: function(res){
                     //저장 후 처리
-                    //console.log( res );
+                    console.log( res );
                     if( res.data.status == "SUCCESS" ){
                         alert("수정하였습니다.")
                         location.href = "/customers";
@@ -88,60 +93,89 @@
             <!-- id -->
             <input type="hidden" name="id" id="id" th:value="${id}" />
             <div class="form-group">
-                <label th:for="name">고객명</label>
+                <label th:for="name"  th:text="#{label.customer.name}">고객명</label>
                 <input type="text" name="name" class="form-control" placeholder="이름을 입력하세요" />
             </div>
             <div class="form-group">
-                <label th:for="customertype">고객 구분: </label>
+                <label th:for="customertype" th:text="#{label.customer.customertype}">고객 구분: </label>
                 <div class="input-group" id="selection" placeholder="고객 구분을 선택하세요">
-                    <input type="radio" name="customertype" value="PERSON" checked="checked"> 개인고객</input>
-                    <input type="radio" name="customertype" value="COMPANY"> 법인고객</input>
+                    <input type="radio" name="customertype" value="PERSON" checked="checked" th:text="#{label.customer.person}"> 개인고객</input>
+                    <input type="radio" name="customertype" value="COMPANY" th:text="#{label.customer.company}"> 법인고객</input>
                 </div>
             </div>
             <div class="form-group">
-                <label th:for="city">City : </label>
+                <label th:for="city" th:text="#{label.customer.city}">City : </label>
                 <input type="text" name="city" class="form-control" placeholder="도시를 입력하세요">
             </div>
             <div class="form-group">
-                <label th:for="street">Street : </label>
+                <label th:for="street" th:text="#{label.customer.street}">Street : </label>
                 <input type="text" name="street"  class="form-control"placeholder="거리를 입력하세요">
             </div>
             <div class="form-group">
-                <label th:for="zipcode">Zipcode : </label>
+                <label th:for="zipcode" th:text="#{label.customer.zipcode}">Zipcode : </label>
                 <input type="text" name="zipcode"  class="form-control" placeholder="우편번호를 입력하세요">
             </div>
             <div class="form-group">
-                <label th:for="linecount">회선수량 : </label>
+                <label th:for="linecount" th:text="#{label.customer.linecount}">회선수량 : </label>
                 <input type="text" name="linecount"  class="form-control" placeholder="회선수량을 입력하세요">
             </div>
 
             <div class="form-group" id="personArea" >
                 <div class="form-group">
-                    <label th:for="regnumber">주민등록번호</label>
-                    <input type="text" name="mobilenumber">
+                    <label th:for="regnumber" th:text="#{label.customer.regnumber}">주민등록번호</label>
+                    <input type="text" name="regnumber">
                           <div class="alert alert-danger" role="alert" style="display: none;">Incorrect Data</div>
                 </div>
                 <div class="form-group">
-                    <label th:for="mobilenumber">휴대폰번호</label>
+                    <label th:for="mobilenumber" th:text="#{label.customer.mobilenumber}">휴대폰번호</label>
                     <input type="text" name="mobilenumber" class="form-control">
                 </div>
             </div>
 
             <div class="form-group" id="companyArea">
                 <div class="form-group">
-                    <label th:for="bizregnumber">사업자등록번호</label>
+                    <label th:for="bizregnumber" th:text="#{label.customer.bizregnumber}">사업자등록번호</label>
                     <input type="text" name="bizregnumber">
                           <div class="alert alert-danger" role="alert"  style="display: none;">Incorrect Data</div>
                 </div>
                 <div class="form-group">
-                    <label th:for="representative">대표자명</label>
+                    <label th:for="representative" th:text="#{label.customer.representative}">대표자명</label>
                     <input type="text" name="representative" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label th:for="phoneno">회사전화번호</label>
+                    <label th:for="phoneno" th:text="#{label.customer.phoneno}">회사전화번호</label>
                     <input type="text" name="phoneno" class="form-control">
                 </div>
             </div>
+
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+            <script>
+            $(document).ready(function() {
+
+                if ( $('input[name=customertype]').val() == 'COMPANY') {
+                    
+                    $('#personArea').hide();
+                    $('#companyArea').show();
+
+                } else {
+
+                    $('#personArea').show();
+                    $('#companyArea').hide();
+
+                }
+                $('input[name=customertype]').on('change', function(e){
+                    if (e.target.value == 'COMPANY'){
+                        $('#personArea').hide();
+                        $('#companyArea').show();
+                    } else {
+                        $('#personArea').show();
+                        $('#companyArea').hide();
+
+                    }
+                });
+
+            });
+            </script>   
 
             <button type="button" class="btn btn-primary" onclick="updateCustomer()">수정</button>
         </form>

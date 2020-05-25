@@ -23,12 +23,12 @@ public class WebConfig {
         ApplicationContext ctx = new GenericApplicationContext();
         Environment env = ctx.getEnvironment();
         String dLang = env.getProperty("-Dlang");
-        if("kr".equals( dLang)) {
+        if("ko".equals( dLang)) {
             sessionLocaleResolver.setDefaultLocale(Locale.KOREA);
         }else if("en".equals( dLang)) {
             sessionLocaleResolver.setDefaultLocale(Locale.US);
         }else{
-            sessionLocaleResolver.setDefaultLocale(Locale.US);
+            sessionLocaleResolver.setDefaultLocale(Locale.KOREA);
         }
 
         return sessionLocaleResolver;

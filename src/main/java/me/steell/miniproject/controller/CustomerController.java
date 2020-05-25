@@ -108,8 +108,14 @@ public class CustomerController {
         data.put("name", customer.getName());
         data.put("address", address);
         data.put("linecount", customer.getLinecount());
+
+        data.put("regnumber", customer.getRegnumber());
         data.put("mobilenumber", customer.getMobilenumber());
 
+        data.put("bizregnumber", customer.getBizregnumber());
+        data.put("representative", customer.getRepresentative());
+        data.put("phoneno", customer.getPhoneno());
+        
         list.add( data );
 
         HashMap result = new HashMap<>();
