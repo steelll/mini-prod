@@ -47,7 +47,10 @@ public class CustomerController {
         customer.setRepresentative(form.getRepresentative());
         customer.setPhoneno(form.getPhoneno());
 
-        new CustomerFormValidation().validate( form, result );
+
+        CustomerFormValidation customerFormValidation = new CustomerFormValidation();
+        customerFormValidation.setCustomerRepository( customerService.getCustomerRepository() );
+        customerFormValidation.validate( form, result );
 
         if( result.hasErrors() ){
            //return "redirect:/customers/new";
@@ -60,8 +63,20 @@ public class CustomerController {
     }
 
     @GetMapping("/customers")
-    public String list(Model model){
-        List<Customer> customers = customerService.findCustomers();
+    public String list(Model model, HttpServletRequest request){
+
+
+        String customername = "";
+        String customertype = "";
+        if( request.getParameter("customername") != null ) {
+            customername = request.getParameter("customername");
+        }
+        if( request.getParameter("customertype") != null ) {
+            customertype = request.getParameter("customertype");
+        }
+        model.addAttribute("customername", customername);
+
+        List<Customer> customers = customerService.findCustomers( customername, customertype  );
         model.addAttribute("customers", customers);
         return "customers/customerList";
     }

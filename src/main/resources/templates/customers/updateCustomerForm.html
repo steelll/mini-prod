@@ -69,8 +69,8 @@
                 dataType: "json",
                 success: function(res){
                     //저장 후 처리
-                    console.log( res );
-                    if( res.data.status == "SUCCESS" ){
+                    //console.log( res );
+                    if( res.status == "SUCCESS" ){
                         alert("수정하였습니다.")
                         location.href = "/customers";
                     }else{

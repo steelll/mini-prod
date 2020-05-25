@@ -19,14 +19,13 @@ public class CustomerService {
     //회원가입
     @Transactional
     public Long join(final Customer customer) {
-        // validateDuplicateCustomer(customer);
         customerRepository.save(customer);
         return customer.getId();
     }
 
     // 회원전체 조회
-    public List<Customer> findCustomers() {
-        return customerRepository.findAll();
+    public List<Customer> findCustomers(String customername, String customertype ) {
+        return customerRepository.findAll( customername,  customertype );
     }
 
     public Customer findOne(final Long id) {
@@ -37,20 +36,8 @@ public class CustomerService {
         return customerRepository.findByName(name);
     }
 
-   private void validateDuplicateCustomer(final Customer customer) {
-
-       final List<Customer> findPersons = customerRepository.findByRegnumber(customer.getRegnumber());
-       if (!findPersons.isEmpty()) {
-           throw new IllegalStateException("이미 등록되어 있습니다.");
-
-       }
-
-       final List<Customer> findCompanys = customerRepository.findByBizregnumber(customer.getBizregnumber());
-       if (!findCompanys.isEmpty()) {
-           throw new IllegalStateException("이미 등록되어 있습니다.");
-
-       }
-
-   }
+    public CustomerRepository getCustomerRepository(){
+        return customerRepository;
+    }
 
 }

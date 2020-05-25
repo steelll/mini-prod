@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaQuery;
 
 import org.springframework.stereotype.Repository;
 
@@ -29,9 +31,29 @@ public class CustomerRepository {
         return em.find(Customer.class, id);
     }
 
-    public List<Customer> findAll(){
-        return em.createQuery("select m from Customer m", Customer.class)
-                 .getResultList();
+    public List<Customer> findAll( String customername, String customertype ){
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("select m from Customer m where 1 = 1 ");
+        if( customername != null && !"".equals(customername) ){
+            sb.append("and name like concat('%',:customername,'%') ");
+        }
+
+        if( customertype != null && !"".equals(customertype) ){
+            sb.append("and customertype = :customertype ");
+        }
+
+        TypedQuery<Customer> query = em.createQuery( sb.toString(), Customer.class);
+        if( customername != null && !"".equals(customername) ){
+            query.setParameter("customername", customername);
+        }
+
+        if( customertype != null && !"".equals(customertype) ){
+            query.setParameter("customertype", customertype);
+        }
+        List<Customer> results = query.getResultList();
+
+        return results;
     }
     
     // public Customer deleteOne(Long id){
@@ -42,7 +64,9 @@ public class CustomerRepository {
     // }
 
     public List<Customer> findByName(String name){
-        return em.createQuery("select m from customer m where m.name = :name", Customer.class)
+        StringBuilder sb = new StringBuilder();
+        sb.append("select m from Customer m where m.name = :name");
+        return em.createQuery(sb.toString(), Customer.class)
             .setParameter("name", name)
             .getResultList();
     }
@@ -54,13 +78,17 @@ public class CustomerRepository {
     // }
     
     public List<Customer> findByRegnumber(String string){
-        return em.createQuery("select m from customer m where m.regnumber = :regnumber", Customer.class)
+        StringBuilder sb = new StringBuilder();
+        sb.append("select m from Customer m where m.regnumber = :regnumber");
+        return em.createQuery(sb.toString(), Customer.class)
             .setParameter("regnumber", string)
             .getResultList();
     }
 
     public List<Customer> findByBizregnumber(String string){
-        return em.createQuery("select m from customer m where m.bizregnumber = :bizregnumber", Customer.class)
+        StringBuilder sb = new StringBuilder();
+        sb.append("select m from Customer m where m.bizregnumber = :bizregnumber");
+        return em.createQuery(sb.toString(), Customer.class)
             .setParameter("bizregnumber", string)
             .getResultList();
     }
