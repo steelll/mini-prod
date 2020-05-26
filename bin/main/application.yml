@@ -15,14 +15,14 @@ spring:
         prefix: classpath:/templates/
         suffix: .html
 
-# logging:
-#     level:
-#         root: debug
-#         org.hibernate.SQL: debug
-#         # org.hibernate.type: trace
-#         # com.parfait.study.simplelogging.service.SomeService: info
-#         com.parfait.study.simplelogging.service.SomeService: debug
-#         me.steell.miniproject: debug
+logging:
+    level:
+        root: debug
+        org.hibernate.SQL: debug
+        # org.hibernate.type: trace
+        # com.parfait.study.simplelogging.service.SomeService: info
+        com.parfait.study.simplelogging.service.SomeService: debug
+        me.steell.miniproject: debug
 
 #logBack dev, prod 설정
 spring.profiles.include: dev

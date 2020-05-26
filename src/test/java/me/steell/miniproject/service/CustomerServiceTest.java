@@ -26,6 +26,7 @@ public class CustomerServiceTest {
         Address address = new Address("서울특별시", "종로구", "12345");
 
         Customer customer = new Customer();
+
         customer.setName("홍길동");
         customer.setAddress(address);
         customer.setLinecount(1);
@@ -40,7 +41,7 @@ public class CustomerServiceTest {
         customerService.join( customer );
 
         //고객조회 메서드 실행
-        List<Customer> list = customerService.findCustomers();
+        List<Customer> list = customerService.findCustomers("홍길동","PERSON");
         Assert.assertTrue( list.size() > 0  );
 
     }
