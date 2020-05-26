@@ -31,6 +31,7 @@ public class CustomerRepository {
         return em.find(Customer.class, id);
     }
 
+        
     public List<Customer> findAll( String customername, String customertype ){
 
         StringBuilder sb = new StringBuilder();
@@ -56,13 +57,6 @@ public class CustomerRepository {
         return results;
     }
     
-    // public Customer deleteOne(Long id){
-    //     return em.(Customer.class, id);
-    //     // return em.createQuery("delete from customer m where m.id = :id", Customer.class)
-    //     //     .setParameter("id", id)
-    //     //     .getResultList();
-    // }
-
     public List<Customer> findByName(String name){
         StringBuilder sb = new StringBuilder();
         sb.append("select m from Customer m where m.name = :name");
@@ -70,12 +64,6 @@ public class CustomerRepository {
             .setParameter("name", name)
             .getResultList();
     }
-
-    // public List<Customer> findByType(String string){
-    //     return em.createQuery("select m from customer m where m.customertype = :customertype", Customer.class)
-    //         .setParameter("customertype", string)
-    //         .getResultList();
-    // }
     
     public List<Customer> findByRegnumber(String string){
         StringBuilder sb = new StringBuilder();
@@ -92,4 +80,6 @@ public class CustomerRepository {
             .setParameter("bizregnumber", string)
             .getResultList();
     }
+
+	
 }
