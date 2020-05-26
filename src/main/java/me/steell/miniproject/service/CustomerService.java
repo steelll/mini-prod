@@ -16,6 +16,7 @@ public class CustomerService {
     
     private final CustomerRepository customerRepository;
 
+  
     //회원가입
     @Transactional
     public Long join(final Customer customer) {
@@ -40,5 +41,18 @@ public class CustomerService {
         return customerRepository;
     }
 
-    
+    /**
+     * 회원 수정
+     */
+    @Transactional
+    public void update(Long id, String name) {
+        Customer customer = customerRepository.findOne(id);
+        customer.setName(name);
+    }
+
+    @Transactional
+    public void deleteCustomer(Long id) {
+        Customer customer = customerRepository.findOne(id);
+        customerRepository.deleteOne(customer.getId());
+    }
 }

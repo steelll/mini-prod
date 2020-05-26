@@ -2,7 +2,6 @@ package me.steell.miniproject.controller;
 
 import me.steell.miniproject.domain.Customer;
 import me.steell.miniproject.repository.CustomerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 

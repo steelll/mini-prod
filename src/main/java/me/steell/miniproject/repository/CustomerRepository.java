@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaQuery;
 
 import org.springframework.stereotype.Repository;
 
@@ -31,6 +30,11 @@ public class CustomerRepository {
         return em.find(Customer.class, id);
     }
 
+    public void deleteOne(Long id) {
+        
+        Customer customer = em.find(Customer.class, id);
+        em.remove(customer);
+    }
         
     public List<Customer> findAll( String customername, String customertype ){
 
